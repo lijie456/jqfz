@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script> -->
+</head>
+
+<body>
+    <ul>
+        <li class="dd" style="background: red;">001</li>
+        <li>002</li>
+        <li class="box" style="background: red;">003</li>
+    </ul>
+    <script>
+        ; (function (e, undefined) {
+            let jQuery = function (el) {
+                return new jQuery.init(el)//jQuery.init函数名
+                //let obj=new jQuery('实参')
+            }
+            //静态方法
+            jQuery.init = function (el) {
+                let els = document.querySelectorAll(el)
+                els.forEach((item, index) => {
+                    this[index] = item
+                })
+                console.log(this)//obj1
+                //添加length属性
+                this.length = els.length
+                return this
+            }
+            //当需要多个方法时使用对象方法
+            jQuery.init.prototype = {
+                //原型eq方法
+                eq: function (number) {
+                    return this[number]
+                },
+                //原型css
+                css: function (attr, value) {
+                    for (let i = 0; i < this.length; i++) {
+                        this[i].style[attr] = value
+                    }
+                    return this//保证链式调用
+                },
+                //上一个兄弟节点
+                prev: function () {
+                    for (let i = 0; i < this.length; i++) {
+                        if (this[i].previousSibling.nodeType == 3) {
+                            return this[i].previousSibling.previousSibling
+                        } else {
+                            return this[i].previousSibling
+                        }
+                    }
+                },
+                 //下一个兄弟节点
+                 next: function () {
+                    for (let i = 0; i < this.length; i++) {
+                        if (this[i].nextSibling.nodeType == 3) {
+                            return this[i].nextSibling.nextSibling
+                        } else {
+                            return this[i].nextSibling
+                        }
+                    }
+                } ,
+                //attr方法
+                attr: function (objAttr, objVal) {
+            for (let i = 0; i < this.length; i++) {
+                this[i].setAttribute(objAttr, objVal)
+                return this
+            }
+        },
+            }
+            window.jQuery = window.$ = jQuery
+        })(window)
+        console.log($('.dd').attr('background','blued'))
+        
+    </script>
+</body>
+
+</html>
